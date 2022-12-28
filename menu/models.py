@@ -14,12 +14,6 @@ class Menu(models.Model):
         related_name='previous',
         on_delete=models.CASCADE
     )
-    next_level = models.ManyToManyField(
-        'Menu',
-        blank=True,
-        verbose_name="следующий пункт меню",
-        related_name='next'
-    )
     label = models.CharField(
         max_length=255,
         verbose_name="Название пункта меню",
