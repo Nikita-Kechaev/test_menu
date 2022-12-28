@@ -1,0 +1,38 @@
+<div style="font-family: 'Inter', sans-serif; font-size: 50px; text-align: left;">
+     Вы находитесь в: {{ title }}
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-light ">
+    <div class="container-fluid">
+        <div class="navbar-collapse justify-content-md-start">
+            <ul class="navbar-nav" id="navbar">
+                {% for elem in menu %}
+                    {% if not elem.previous_level %}
+                        <li class="nav-item">
+                            <div class="btn-group px-2">
+                                {% if elem.next_level.all %}
+                                <a class="btn btn-outline-primary {% if id == elem.id %}active{% endif %}" href="{% url 'levels' elem.id %}" type="button" data-bs-auto-close="outside">
+                                    {{ elem.label }}
+                                </a>
+                                <a type="button" data-bs-auto-close="outside" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split {% if id == elem.id %}active{% endif %}" id="dropdownMenuReference{{ elem.id }}" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuReference{{ elem.id }}">
+                                    {% for elem in elem.next_level.all %}
+                                    <li>
+                                        {% include "includes/menu.html" with elem=elem only %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <a class="btn btn-outline-primary {% if id == elem.id %}active{% endif %}" data-bs-auto-close="outside" href="{% url 'levels' elem.id %}" type="button">{{ elem.label }}</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

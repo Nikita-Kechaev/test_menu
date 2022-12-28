@@ -1,0 +1,19 @@
+<div class="btn-group dropend">
+    {% if elem.next_level.all %}
+    <a class="btn btn-outline-primary {% if id == elem.id %}active{% endif %}" data-bs-auto-close="outside" href="{% url 'levels' elem.id %}" type="button">
+        {{ elem.label }}
+    </a>
+    <a type="button" data-bs-auto-close="outside" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split {% if id == elem.id %}active{% endif %}" id="dropdownMenuReference{{ elem.id }}" data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
+        <span class="visually-hidden">Toggle Dropdown</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuReference{{ elem.id }}">
+        {% for elem in elem.next_level.all %}
+        <li>
+            {% include "includes/menu.html" with elem=elem only %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <a class="btn btn-outline-primary {% if id == elem.id %}active{% endif %}" data-bs-auto-close="outside" href="{% url 'levels' elem.id %}" type="button">{{ elem.label }}</a>
+    {% endif %}
+</div>
